@@ -9,7 +9,7 @@ services:
       MYSQL_PASSWORD: password
       TZ: Asia/Tokyo
     ports:
-      - 3306:3306
+      - 3307:3307
     volumes:
       - ./mysql:/var/lib/mysql
   web:
