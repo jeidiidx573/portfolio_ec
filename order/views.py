@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from order.models import Product
+
 # Create your views here.
 def order_list(request):
     """購入 > 商品一覧"""
-    return HttpResponse('購入 > 商品一覧')
+    # return HttpResponse('購入 > 商品一覧')
+    product_list = Product.objects.all().order_by('id')
+    return render(request,
+        'order/order_list.html')
 
 def order_form(request):
     """購入 > 顧客情報入力"""
