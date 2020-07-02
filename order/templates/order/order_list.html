@@ -5,23 +5,23 @@
 {% block content %}
     <h4 class="mt-4 border-bottom">書籍の一覧</h4>
     <a href="#" class="btn btn-primary btn-sm my-3">追加</a>
+    <form method="post" action="{% url 'order:order_form' %}">
+    {% csrf_token %}
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
           <th scope="col">ID</th>
           <th scope="col">書籍名</th>
-          <th scope="col">出版社</th>
           <th scope="col">ページ数</th>
           <th scope="col">操作</th>
         </tr>
       </thead>
       <tbody>
-        {% for book in books %}
+        {% for item in lists %}
         <tr>
-          <th scope="row">{{ book.id }}</th>
-          <td>{{ book.name }}</td>
-          <td>{{ book.publisher }}</td>
-          <td>{{ book.page }}</td>
+          <th scope="row">{{ item.product.id }}</th>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.product_cnt_form.as_p }}</td>
           <td>
             <a href="#" class="btn btn-outline-primary btn-sm">修正</a>
             <a href="#" class="btn btn-outline-danger btn-sm">削除</a>
@@ -30,4 +30,6 @@
         {% endfor %}
       </tbody>
     </table>
+    <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
 {% endblock content %}

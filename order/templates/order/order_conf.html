@@ -1,0 +1,26 @@
+{% extends "order/base.html" %}
+
+{% block title %}書籍の一覧{% endblock title %}
+
+{% block content %}
+    <h4 class="mt-4 border-bottom">書籍の一覧</h4>
+    <h4>購入情報</h4>
+    {{ cart_data }}
+    <ul>
+      {% for data in cart_data %}
+      <li>{{ data.name }}: {{ data.product_cnt }}個</li>
+      {% endfor %}
+    </ul>
+    <p>小計: {{ subtotal }} 円</p>
+    <p>消費税: {{ total_tax }} 円</p>
+    <p>送料: {{ ship_cost }} 円</p>
+    <p>合計金額: {{ total_price }} 円</p>
+    <form method="post" action="{% url 'order:order_conf' %}">
+    {% csrf_token %}
+    <ul>
+      {% for field in form %}
+      <li>{{ field.label_tag }} {{ field }} {{ field.errors }}</li>
+      {% endfor %}
+    </ul>
+    <input class="btn btn-primary" type="submit" value="Submit">
+{% endblock content %}
