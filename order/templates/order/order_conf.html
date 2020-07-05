@@ -3,24 +3,129 @@
 {% block title %}書籍の一覧{% endblock title %}
 
 {% block content %}
-    <h4 class="mt-4 border-bottom">書籍の一覧</h4>
-    <h4>購入情報</h4>
-    {{ cart_data }}
-    <ul>
-      {% for data in cart_data %}
-      <li>{{ data.name }}: {{ data.product_cnt }}個</li>
-      {% endfor %}
-    </ul>
-    <p>小計: {{ subtotal }} 円</p>
-    <p>消費税: {{ total_tax }} 円</p>
-    <p>送料: {{ ship_cost }} 円</p>
-    <p>合計金額: {{ total_price }} 円</p>
-    <form method="post" action="{% url 'order:order_conf' %}">
-    {% csrf_token %}
-    <ul>
-      {% for field in form %}
-      <li>{{ field.label_tag }} {{ field }} {{ field.errors }}</li>
-      {% endfor %}
-    </ul>
-    <input class="btn btn-primary" type="submit" value="Submit">
+<main class="page payment-page">
+    <section class="clean-block payment-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Good Goods Online へようこそ</h2>
+                <p>文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、<br></p>
+            </div>
+            <form method="post" action="{% url 'order:order_thanks' %}">
+            {% csrf_token %}
+                <div class="products">
+                    <h3 class="title">商品情報</h3>
+                    {% for data in cart_data %}
+                    <div class="item" style="margin-bottom: 20px;">
+                        <div class="form-row">
+                            <div class="col-xl-2"><img src="{{ MEDIA_URL }}{{ data.image }}" style="width: 60px;height: 60px;margin-top: 0px;margin-bottom: 0px;"></div>
+                            <div class="col-xl-6 offset-xl-0">
+                                <p style="margin: 20px;margin-right: 0px;margin-left: 0px;margin-top: 20px;margin-bottom: 10px;font-weight: 600;">{{ data.name }}</p>
+                            </div>
+                            <div class="col-xl-2 offset-xl-0"><span class="price" style="margin-right: 0px;margin-top: 20px;margin-bottom: 10px;">{{ data.product_cnt }}個</span></div>
+                            <div class="col-xl-2 offset-xl-0"><span class="price" style="margin-right: 0px;margin-top: 20px;margin-bottom: 10px;">{{ data.product_total }}円</span></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="item border-top" style="margin-bottom: 20px;padding-top: 15px;height: 120px;">
+                        <div class="item" style="margin-bottom: 20px;">
+                            <div class="form-row">
+                                <div class="col-xl-3 offset-xl-0">
+                                    <p style="display: block;margin: 0px;margin-right: 0px;margin-left: 0px;margin-top: 0px;margin-bottom: 0px;font-weight: 600;padding: 0px;">小計</p>
+                                </div>
+                                <div class="col-xl-2 offset-xl-7"><span class="price" style="margin-right: 0px;margin-top: 0px;margin-bottom: 0px;">{{ subtotal }}円</span></div>
+                            </div>
+                        </div>
+                        <div class="item" style="margin-bottom: 20px;">
+                            <div class="form-row">
+                                <div class="col-xl-3 offset-xl-0">
+                                    <p style="display: block;margin: 0px;margin-right: 0px;margin-left: 0px;margin-top: 0px;margin-bottom: 0px;font-weight: 600;padding: 0px;">消費税</p>
+                                </div>
+                                <div class="col-xl-2 offset-xl-7"><span class="price" style="margin-right: 0px;margin-top: 0px;margin-bottom: 0px;">{{ total_tax }}円</span></div>
+                            </div>
+                        </div>
+                        <div class="item" style="margin-bottom: 20px;">
+                            <div class="form-row">
+                                <div class="col-xl-3 offset-xl-0">
+                                    <p style="display: block;margin: 0px;margin-right: 0px;margin-left: 0px;margin-top: 0px;margin-bottom: 0px;font-weight: 600;padding: 0px;">送料</p>
+                                </div>
+                                <div class="col-xl-2 offset-xl-7"><span class="price" style="margin-right: 0px;margin-top: 0px;margin-bottom: 0px;">{{ ship_cost }}円</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total" style="padding-top: 15px;"><span>合計金額</span><span class="price">$320</span></div>
+                </div>
+                <div class="card-details">
+                    <h3 class="title">お客様情報</h3>
+                    <div class="form-row">
+                        <div class="col-sm-7 col-xl-12 offset-xl-0">
+                            <div class="form-row">
+                                <div class="col">
+                                    <h6>氏名</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <p style="margin-left: 20px;">{{ session_form_user_data.name }}</p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <h6>フリガナ</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <p style="margin-left: 20px;">{{ session_form_user_data.kana }}</p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <h6>電話番号</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <p style="margin-left: 20px;">{{ session_form_user_data.tel }}</p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <h6>メールアドレス</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <p style="margin-left: 20px;">{{ session_form_user_data.mail }}</p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <h6>郵便番号</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <p style="margin-left: 20px;">{{ session_form_user_data.zip }}</p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <h6>住所</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <p style="margin-left: 20px;">{{ session_form_user_data.address_1 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">ご注文を確定</button></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
 {% endblock content %}

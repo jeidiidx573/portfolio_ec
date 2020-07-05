@@ -2,17 +2,32 @@
 <!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{% block extra_css %}{% endblock %}
-<title>{% block title %}My books{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Shopping Cart - Good Goods Online</title>
+    <link rel="stylesheet" href="{% static 'order/assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="{% static 'order/assets/fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href="{% static 'order/assets/css/smoothproducts.css' %}">
 </head>
 <body>
-  <div class="container">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container"><a class="navbar-brand logo" href="#">Good Goods Online</a></div>
+    </nav>
     {% block content %}
       {{ content }}
     {% endblock %}
-  </div>
 {% block extra_js %}{% endblock %}
+<footer class="page-footer dark">
+    <div class="footer-copyright">
+        <p>© 2020 Copyright Fumiya Mizobuchi</p>
+    </div>
+</footer>
+<script src="{% static 'order/assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'order/assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src="{% static 'order/assets/js/smoothproducts.min.js' %}"></script>
+<script src="{% static 'order/assets/js/theme.js' %}"></script>
 </body>
 </html>

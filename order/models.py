@@ -7,11 +7,17 @@ class Product(models.Model):
     price = models.IntegerField(default=0)
     info = models.TextField()
     like = models.IntegerField(default=0)
-    
+    image = models.ImageField(
+        upload_to='product/',
+        blank=True,
+        null=True
+    )
+
 # Create your models here.
 class Order(models.Model):
     """注文情報"""
     status = models.IntegerField()
+    order_code = models.IntegerField(default=0)
     name = models.CharField(max_length=255)
     kana = models.CharField(max_length=255)
     tel = models.CharField(max_length=255)
@@ -30,7 +36,6 @@ class OrderItem(models.Model):
     """注文情報"""
     order = models.ForeignKey(Order, related_name='orderitems', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='orderitems', on_delete=models.CASCADE)
-    status = models.IntegerField()
     name = models.CharField(max_length=255)
     price = models.IntegerField(default=0)
     count = models.IntegerField(default=0)

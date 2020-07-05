@@ -1,0 +1,29 @@
+{% extends "order/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block title %}Good Goods Online{% endblock title %}
+
+{% block content %}
+<main class="page payment-page">
+    <section class="clean-block payment-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Payment</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 offset-xl-3">
+                    <div style="height: 400px;background-color: #ffffff;">
+                        <h3 class="text-center" style="padding: 30px;padding-right: 0px;padding-bottom: 28px;padding-left: 0px;height: 71px;font-size: 20px;font-weight: 600;letter-spacing: 2px;">ご注文完了</h3>
+                        <h5 class="text-center" style="padding: 10px;margin-right: 20px;background-color: #eaeaea;margin-left: 20px;">ご注文番号: {{ order_code }}</h5>
+                        <div style="margin-right: 20px;margin-left: 20px;margin-top: 20px;">
+                            <p class="text-center" style="font-size: 16px;"><br>この度は「Good Goods Online」をご利用いただき、誠にありがとうございます。<br>お客様のご注文内容を記載したメールをお送りしておりますので、ご注文内容とお間違いないかご確認くださいませ。<br><br></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

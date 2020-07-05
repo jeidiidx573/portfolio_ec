@@ -1,2 +1,5 @@
 Django>=2.0,<3.0
 mysqlclient
+pillow
+django-cleanup
+django-widgets-improved

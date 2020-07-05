@@ -1,26 +1,51 @@
 {% extends "order/base.html" %}
 
-{% block title %}書籍の一覧{% endblock title %}
+{% block title %}Good Goods Online{% endblock title %}
 
 {% block content %}
-    <h4 class="mt-4 border-bottom">書籍の一覧</h4>
-    <h4>購入情報</h4>
-    {{ cart_data }}
-    <ul>
-      {% for data in cart_data %}
-      <li>{{ data.name }}: {{ data.product_cnt }}個</li>
-      {% endfor %}
-    </ul>
-    <p>小計: {{ subtotal }} 円</p>
-    <p>消費税: {{ total_tax }} 円</p>
-    <p>送料: {{ ship_cost }} 円</p>
-    <p>合計金額: {{ total_price }} 円</p>
-    <form method="post" action="{% url 'order:order_conf' %}">
-    {% csrf_token %}
-    <ul>
-      {% for field in form %}
-      <li>{{ field.label_tag }} {{ field }} {{ field.errors }}</li>
-      {% endfor %}
-    </ul>
-    <input class="btn btn-primary" type="submit" value="Submit">
+
+<main class="page shopping-cart-page">
+    <section class="clean-block clean-cart dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Good Goods Online へようこそ</h2>
+                <p>文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、<br></p>
+            </div>
+            <div class="content">
+            <form method="post" action="{% url 'order:order_conf' %}">
+            {% csrf_token %}
+                <div class="row no-gutters">
+                    <div class="col-md-12 col-lg-8 col-xl-7">
+                        <div style="padding: 30px;">
+                            <h3 class="text-center" style="padding: 16px;padding-right: 0px;padding-bottom: 28px;padding-left: 0px;height: 71px;font-size: 20px;font-weight: 600;letter-spacing: 2px;">お客様情報</h3>
+                                {% for field in form %}
+                                <div class="form-group"><label for="name">{{ field.label_tag }}</label>{{ field }}</div>
+                                {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-4 col-xl-5">
+                        <div class="row">
+                            <div class="col">
+                                <div class="summary">
+                                    <h3>お会計</h3>
+                                    {% for data in cart_data %}
+                                    <h4><img src="{{ MEDIA_URL }}{{ data.image }}" style="width: 30px;height: 30px;margin-right: 15px;"><span class="text" style="font-size: 14px;font-weight: 5;">{{ data.name }}</span><span class="price">{{ data.product_total }}円</span>
+                                        <span class="price" style="margin-right: 20px;">{{ data.product_cnt }}個</span>
+                                    </h4>
+                                    {% endfor %}
+                                    <h4><span class="text">小計</span><span class="price">{{ subtotal }}円</span></h4>
+                                    <h4><span class="text">消費税</span><span class="price">{{ total_tax }}円</span></h4>
+                                    <h4><span class="text">送料</span><span class="price">{{ ship_cost }}円</span></h4>
+                                    <h4><span class="text">合計金額</span><span class="price">{{ total_price }}円</span></h4>
+                                    <button class="btn btn-primary btn-block btn-lg" type="submit">購入画面へ</button>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock content %}

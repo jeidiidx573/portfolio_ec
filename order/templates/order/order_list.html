@@ -1,35 +1,61 @@
 {% extends "order/base.html" %}
 
-{% block title %}書籍の一覧{% endblock title %}
+{% load widget_tweaks %}
+
+{% block title %}Good Goods Online{% endblock title %}
 
 {% block content %}
-    <h4 class="mt-4 border-bottom">書籍の一覧</h4>
-    <a href="#" class="btn btn-primary btn-sm my-3">追加</a>
-    <form method="post" action="{% url 'order:order_form' %}">
-    {% csrf_token %}
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">書籍名</th>
-          <th scope="col">ページ数</th>
-          <th scope="col">操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in lists %}
-        <tr>
-          <th scope="row">{{ item.product.id }}</th>
-          <td>{{ item.product.name }}</td>
-          <td>{{ item.product_cnt_form.as_p }}</td>
-          <td>
-            <a href="#" class="btn btn-outline-primary btn-sm">修正</a>
-            <a href="#" class="btn btn-outline-danger btn-sm">削除</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <input class="btn btn-primary" type="submit" value="Submit">
-    </form>
+    <main class="page shopping-cart-page">
+        <section class="clean-block clean-cart dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Good Goods Online へようこそ</h2>
+                    <p>文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、<br></p>
+                </div>
+                <div class="content">
+                <form method="post" action="{% url 'order:order_form' %}">
+                {% csrf_token %}
+                    <div class="row no-gutters">
+                        <div class="col-md-12 col-lg-8">
+                            <div class="items">
+                              {% for item in lists %}
+                                <div class="product">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col-md-3">
+                                            <div class="product-image"><img class="img-fluid d-block mx-auto image" src="{{ MEDIA_URL }}{{ item.product.image }}"></div>
+                                        </div>
+                                        <div class="col-md-5 product-info"><strong>{{ item.product.name }}</strong>
+                                            <div class="product-specs" style="margin: 0px;margin-top: 15px;">
+                                                <div><a href="#" style="padding: 5px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;border: solid 1px #ccc;border-radius: 10px;display: block;width: 60px;"><i class="fa fa-heart" style="padding: 5px;color: rgb(255,104,104);"></i><small style="padding: 4px;">{{ item.product.like }}</small></a></div>
+                                            </div>
+                                            <div class="product-specs" style="margin-top: 5px;">
+                                                <div>
+                                                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+                                                  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-2 quantity"><label class="d-none d-md-block" for="quantity">数量</label>{{ item.product_cnt_form.as_p }}</div>
+                                        <div class="col-6 col-md-2 price"><span style="font-size: 20px;">{{ item.product.price }}円</span></div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <div class="summary">
+                                <h3>お会計</h3>
+                                <h4><span class="text">小計</span><span class="price">360円</span></h4>
+                                <h4><span class="text">消費税</span><span class="price">36円</span></h4>
+                                <h4><span class="text">送料</span><span class="price">800円</span></h4>
+                                <h4><span class="text">合計金額</span><span class="price">1,196円</span></h4>
+                                <button class="btn btn-primary btn-block btn-lg" type="submit">購入画面へ</button>
+                              </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock content %}
