@@ -29,5 +29,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="{% static 'order/assets/js/smoothproducts.min.js' %}"></script>
 <script src="{% static 'order/assets/js/theme.js' %}"></script>
+<script src="{% static 'order/assets/js/jquery-numerator.js' %}"></script>
+<script>
+function animation(e,val){
+    console.log(e,val)
+
+      e.numerator( {
+        easing: 'swing', // アニメーションの動き
+        duration: 100, // アニメーションの時間
+        toValue: val, // どこまでカウントアップするか
+        delimiter: ',', // ３桁ごとに区切る値
+        rounding: 0,
+        onStep: function(now, fx){
+        	e.text(parseInt(now).toLocaleString() + '円');
+        }
+      });
+}
+
+$('.product_count').on('input',function() {
+  let subtotal = 0;
+  let total_tax = 0;
+  let ship_cost = 0;
+  let total_price = 0;
+  $('.product').each(function() {
+    let count = $(this).find('input').val();
+    let price = $(this).find('.price_area').data('price');
+    subtotal += parseInt(count) * parseInt(price)
+    console.log(subtotal)
+  });
+
+  total_tax = parseInt(subtotal) * 0.1;
+
+  if (parseInt(subtotal) < 5000){
+    ship_cost = 800;
+  }
+  total_price = subtotal + total_tax + ship_cost;
+
+
+  animation($('.summary').find('.subtotal'),subtotal);
+  animation($('.summary').find('.total_tax'),total_tax);
+  animation($('.summary').find('.ship_cost'),ship_cost);
+  animation($('.summary').find('.total_price'),total_price);
+
+});
+
+</script>
 </body>
 </html>

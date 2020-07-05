@@ -24,8 +24,9 @@ def order_list(request):
 
         # 商品ごとのinput要素生成
         form_item = {
-            ('product_%d' % product.id): forms.IntegerField(initial=0,label=False,required=False,widget=forms.NumberInput(attrs={'class': 'form-control quantity-input'})) }
+            ('product_%d' % product.id): forms.IntegerField(initial=0,label=False,required=False,widget=forms.NumberInput(attrs={'class': 'form-control quantity-input product_count'})) }
 
+        product.price_val = product.price
         product.price = "{:,}".format(product.price)
         items["product"] = product
         items["product_cnt_form"] = type('DynamicProductForm', (ProductForm,), form_item )
