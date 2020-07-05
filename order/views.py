@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.template.loader import render_to_string
 
 from order.models import Product, Order, OrderItem
 from .forms import ProductForm, UserForm
 from django import forms
+from django.core.mail import send_mail, EmailMessage
 
 import random
 
@@ -207,6 +209,9 @@ def order_thanks(request):
 
     order_code = random.randrange(10000000,99999999)
 
+    main_context = {}
+    order_items = []
+
     # DB登録order
     order = Order(
         status = 1,
@@ -238,9 +243,34 @@ def order_thanks(request):
             subtotal = data['product_total_val'],
         )
 
+        order_items.append(orderitem)
         OrderItem.save(orderitem)
+
+    # メールテキスト
+    print(order)
+    print(order.name)
+
+    main_context['order'] = order
+    main_context['order_items'] = order_items
+
+    # メール配信
+    subject = 'タイトル'
+    from_email = 'mizobuchi.works@gmail.com'
+    recipient_list = ['mizobuchi.works@gmail.com']
+    message = render_to_string('order/tmpl-mail.txt', main_context, request)
+    email = EmailMessage(
+        subject,
+        message,
+        from_email,
+        recipient_list
+        )
+    email.send()
 
     context = {
         'order_code': order_code,
         }
+
+    # セッション削除
+    request.session.flush()
+
     return render(request, 'order/order_thanks.html', context)

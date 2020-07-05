@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup',
     'widget_tweaks',
+    'django_ses',
     'order.apps.OrderConfig',
 ]
 
@@ -88,6 +89,10 @@ DATABASES = {
     }
 }
 
+# メール設定
+AWS_SES_ACCESS_KEY_ID = 'AKIAW63FFT7EVXN4XTF2'
+AWS_SES_SECRET_ACCESS_KEY = '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'
+EMAIL_BACKEND = 'django_ses.SESBackend'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

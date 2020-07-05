@@ -1,0 +1,17 @@
+{{ order.name }} 様
+
+この度は「Good Goods Online」をご利用いただき、誠にありがとうございます。
+このメールはテスト用ですので、お手数ですがご確認後破棄くださいませ。
+
+-------------------------
+{% for data in order_items %}
+商品名: {{ data.name }}
+価格: {{ data.price }}円
+個数: {{ data.count }}個
+
+-------------------------
+{% endfor %}
+小計: {{ order.subtotal }}円
+消費税: {{ order.total_tax }}円
+送料: {{ order.ship_cost }}円
+合計金額: {{ order.total_price }}円
