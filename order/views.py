@@ -24,7 +24,7 @@ def order_list(request):
 
         # 商品ごとのinput要素生成
         form_item = {
-            ('product_%d' % product.id): forms.IntegerField(initial=0,label=False,required=False,widget=forms.NumberInput(attrs={'class': 'form-control quantity-input product_count'})) }
+            ('product_%d' % product.id): forms.IntegerField(initial=0,label=False,required=False,widget=forms.NumberInput(attrs={'class': 'form-control quantity-input product_count', 'min': 0})) }
 
         product.price_val = product.price
         product.price = "{:,}".format(product.price)
@@ -60,6 +60,7 @@ def order_form(request):
     # セッション情報取得
     session_form_data = request.session.get('cart_data')
 
+    print(session_form_data)
     if session_form_data is None:
         # セッション切れや、セッションが空でURL直接入力したら入力画面にリダイレクト。
         return redirect('order:order_list')
@@ -79,6 +80,10 @@ def order_form(request):
             subtotal += product_total
             cart_data.append({'product_cnt': product_cnt, 'id': product.id ,'name': product.name, 'product_total': "{:,}".format(product_total), 'image':product.image })
 
+
+    if subtotal == 0:
+        # セッション切れや、セッションが空でURL直接入力したら入力画面にリダイレクト。
+        return redirect('order:order_list')
 
     total_tax = int(round((subtotal * 0.1))) # 消費税
     subtotal_in_tax = int(subtotal) + int(total_tax) # 消費税込み金額
