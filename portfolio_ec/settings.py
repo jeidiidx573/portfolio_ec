@@ -90,8 +90,8 @@ DATABASES = {
 }
 
 # メール設定
-AWS_SES_ACCESS_KEY_ID = 'AKIAW63FFT7EVXN4XTF2'
-AWS_SES_SECRET_ACCESS_KEY = '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'
+AWS_SES_ACCESS_KEY_ID = '***'
+AWS_SES_SECRET_ACCESS_KEY = '***'
 EMAIL_BACKEND = 'django_ses.SESBackend'
 
 # Password validation
